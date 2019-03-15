@@ -38,6 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class UnixDomainSocket extends Socket {
   private final ReferenceCountedFileDescriptor fd;
+  private boolean isClosed = false;
   private final InputStream is;
   private final OutputStream os;
 
@@ -101,8 +102,16 @@ public class UnixDomainSocket extends Socket {
     }
   }
 
+  @Override
+  public boolean isClosed() {
+    return this.isClosed;
+  }
+
   public void close() throws IOException {
+    shutdownInput();
+    shutdownOutput();
     super.close();
+
     try {
       // This might not close the FD right away. In case we are about
       // to read or write on another thread, it will delay the close
@@ -110,6 +119,7 @@ public class UnixDomainSocket extends Socket {
       // being re-used for a different purpose and the other thread
       // reading from a different FD.
       fd.close();
+      this.isClosed = true;
     } catch (LastErrorException e) {
       throw new IOException(e);
     }

@@ -52,6 +52,7 @@ public class Win32NamedPipeSocket extends Socket {
     static final boolean DEFAULT_REQUIRE_STRICT_LENGTH = false;
     private final HANDLE handle;
     private final CloseCallback closeCallback;
+    private boolean isClosed = false;
     private final boolean requireStrictLength;
     private final InputStream is;
     private final OutputStream os;
@@ -108,16 +109,29 @@ public class Win32NamedPipeSocket extends Socket {
     }
 
     @Override
+    public boolean isClosed() {
+        return this.isClosed;
+    }
+
+    @Override
     public void close() throws IOException {
+        // Follow shutdown procedure in pynailgun.py
+        shutdownInput();
+        shutdownOutput();
+        API.CloseHandle(handle);
+
+        this.isClosed = true;
         closeCallback.onNamedPipeSocketClose(handle);
     }
 
     @Override
     public void shutdownInput() throws IOException {
+        API.CloseHandle(readerWaitable);
     }
 
     @Override
     public void shutdownOutput() throws IOException {
+        API.CloseHandle(writerWaitable);
     }
 
     private class Win32NamedPipeSocketInputStream extends InputStream {
