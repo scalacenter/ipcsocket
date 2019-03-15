@@ -12,7 +12,8 @@ lazy val root = (project in file("."))
       homepage := scmInfo.value map (_.browseUrl),
       scmInfo := Some(ScmInfo(url("https://github.com/sbt/ipcsocket"), "git@github.com:sbt/ipcsocket.git")),
       developers := List(
-        Developer("eed3si9n", "Eugene Yokota", "@eed3si9n", url("https://github.com/eed3si9n"))
+        Developer("eed3si9n", "Eugene Yokota", "@eed3si9n", url("https://github.com/eed3si9n")),
+        Developer("jvican", "Jorge Vicente Cantero", "@jvican", url("https://github.com/jvican"))
       ),
       isSnapshot := (isSnapshot or version(_ endsWith "-SNAPSHOT")).value,
       description := "IPC: Unix Domain Socket and Windows Named Pipes for Java",
