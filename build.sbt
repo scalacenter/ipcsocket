@@ -5,12 +5,12 @@ lazy val junitInterface = "com.novocode" % "junit-interface" % "0.11"
 lazy val root = (project in file("."))
   .settings(
     inThisBuild(List(
-      version := "1.0.1-SNAPSHOT",
-      organization := "org.scala-sbt.ipcsocket",
-      organizationName := "sbt",
-      organizationHomepage := Some(url("http://scala-sbt.org/")),
+      version := "1.0.1",
+      organization := "ch.epfl.scala",
+      organizationName := "Scala Center",
+      organizationHomepage := Some(url("http://scala.epfl.ch/")),
       homepage := scmInfo.value map (_.browseUrl),
-      scmInfo := Some(ScmInfo(url("https://github.com/sbt/ipcsocket"), "git@github.com:sbt/ipcsocket.git")),
+      scmInfo := Some(ScmInfo(url("https://github.com/scalacenter/ipcsocket"), "git@github.com:scalacenter/ipcsocket.git")),
       developers := List(
         Developer("eed3si9n", "Eugene Yokota", "@eed3si9n", url("https://github.com/eed3si9n")),
         Developer("jvican", "Jorge Vicente Cantero", "@jvican", url("https://github.com/jvican"))
